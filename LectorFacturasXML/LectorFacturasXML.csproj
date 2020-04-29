@@ -50,14 +50,17 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Clases\Addenda.cs" />
+    <Compile Include="Clases\CfdiRelacionado.cs" />
+    <Compile Include="Clases\CfdiRelacionados.cs" />
     <Compile Include="Clases\Complemento.cs" />
     <Compile Include="Clases\ComplementoConcepto.cs" />
     <Compile Include="Clases\Comprobante.cs" />
     <Compile Include="Clases\Concepto.cs" />
-    <Compile Include="Clases\Contribuyente.cs" />
+    <Compile Include="Clases\Receptor.cs" />
+    <Compile Include="Clases\Emisor.cs" />
     <Compile Include="Clases\CuentaPredial.cs" />
     <Compile Include="Clases\MyExcel.cs" />
-    <Compile Include="Clases\RegimenFiscal.cs" />
     <Compile Include="Clases\Retenciones.cs" />
     <Compile Include="Clases\Traslados.cs" />
     <Compile Include="Clases\Ubicacion.cs" />
@@ -65,9 +68,7 @@
     <Compile Include="Clases\Impuestos.cs" />
     <Compile Include="Clases\InformacionAduanera.cs" />
     <Compile Include="Clases\Parte.cs" />
-    <Compile Include="Clases\Retencion.cs" />
     <Compile Include="Clases\TimbreFiscalDigital.cs" />
-    <Compile Include="Clases\Traslado.cs" />
     <Compile Include="Clases\Conceptos.cs" />
     <Compile Include="Factura.cs">
       <SubType>Form</SubType>
@@ -103,9 +104,6 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
     <None Include="tdCFDI.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="TimbreFiscalDigitalv11.xsd">
       <SubType>Designer</SubType>
     </None>
   </ItemGroup>

@@ -5,11 +5,11 @@ namespace LectorFacturasXML.Clases
 {
     public class Traslados
     {
-        private readonly List<Traslado> traslados;
+        private readonly List<Impuesto> traslados;
 
         public Traslados()
         {
-            traslados = new List<Traslado>();
+            traslados = new List<Impuesto>();
         }
 
         public void Cargar(XmlAttributeCollection atributos)
@@ -29,9 +29,9 @@ namespace LectorFacturasXML.Clases
             {
                 if (n.Name.ToUpper().Contains("TRASLADO"))
                 {
-                    var nuevoTraslado = new Traslado();
+                    Impuesto nuevoTraslado = new Impuesto();
                     nuevoTraslado.Cargar(n.Attributes);
-                    nuevoTraslado.CargarNodos(n); //¿Quitar?
+                    //nuevoTraslado.CargarNodos(n); //¿Quitar?
                     traslados.Add(nuevoTraslado);
                 }
             }

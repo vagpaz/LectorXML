@@ -6,18 +6,22 @@ namespace LectorFacturasXML.Clases
     {
         public Comprobante()
         {
-            Emisor = new Contribuyente();
-            Receptor = new Contribuyente();
+            CfdiRelacionados = new CfdiRelacionados();
+            Emisor = new Emisor();
+            Receptor = new Receptor();
             Conceptos = new Conceptos();
             Impuestos = new Impuestos();
             Complemento = new Complemento();
+            Addenda = new Addenda();
         }
 
-        public Contribuyente Emisor { set; get; }
-        public Contribuyente Receptor { set; get; }
+        public CfdiRelacionados CfdiRelacionados { set; get; }
+        public Emisor Emisor { set; get; }
+        public Receptor Receptor { set; get; }
         public Conceptos Conceptos { set; get; }
         public Impuestos Impuestos { set; get; }
         public Complemento Complemento { set; get; }
+        public Addenda Addenda { set; get; }
 
         public string Version { set; get; }
         public string Serie { set; get; }
@@ -30,13 +34,14 @@ namespace LectorFacturasXML.Clases
         public string CondicionesDePago { set; get; }
         public string SubTotal { set; get; }
         public string Descuento { set; get; }
-        public string MotivoDescuento { set; get; }
-        public string TipoCambio { set; get; }
+        public string MotivoDescuento { set; get; } //Ya no está
         public string Moneda { set; get; }
+        public string TipoCambio { set; get; }
         public string Total { set; get; }
         public string TipoDeComprobante { set; get; }
         public string MetodoDePago { set; get; }
         public string LugarExpedicion { set; get; }
+        public string Confirmacion { set; get; }
         public string NumCtaPago { set; get; }
         public string FolioFiscalOrig { set; get; }
         public string SerieFolioFiscalOrig { set; get; }
@@ -48,75 +53,75 @@ namespace LectorFacturasXML.Clases
         {
             foreach (XmlAttribute at in atributos)
             {
-                switch (at.Name)
+                switch (at.Name.ToUpper())
                 {
-                    case "version":
+                    case "VERSION":
                         Version = at.Value;
                         break;
-                    case "serie":
+                    case "SERIE":
                         Serie = at.Value;
                         break;
-                    case "folio":
+                    case "FOLIO":
                         Folio = at.Value;
                         break;
-                    case "fecha":
+                    case "FECHA":
                         Fecha = at.Value;
                         break;
-                    case "sello":
+                    case "SELLO":
                         Sello = at.Value;
                         break;
-                    case "formaDePago":
+                    case "FORMADEPAGO":
                         FormaDePago = at.Value;
                         break;
-                    case "noCertificado":
+                    case "NOCERTIFICADO":
                         NoCertificado = at.Value;
                         break;
-                    case "certificado":
+                    case "CERTIFICADO":
                         Certificado = at.Value;
                         break;
-                    case "condicionesDePago":
+                    case "CONDICIONESDEPAGO":
                         CondicionesDePago = at.Value;
                         break;
-                    case "subTotal":
+                    case "SUBTOTAL":
                         SubTotal = at.Value;
                         break;
-                    case "descuento":
+                    case "DESCUENTO":
                         Descuento = at.Value;
                         break;
-                    case "motivoDescuento":
+                    case "MOTIVODESCUENTO":
                         MotivoDescuento = at.Value;
                         break;
-                    case "TipoCambio":
+                    case "TIPOCAMBIO":
                         TipoCambio = at.Value;
                         break;
-                    case "Moneda":
+                    case "MONEDA":
                         Moneda = at.Value;
                         break;
-                    case "total":
+                    case "TOTAL":
                         Total = at.Value;
                         break;
-                    case "tipoDeComprobante":
+                    case "TIPODECOMPROBANTE":
                         TipoDeComprobante = at.Value;
                         break;
-                    case "metodoDePago":
+                    case "METODODEPAGO":
                         MetodoDePago = at.Value;
                         break;
-                    case "LugarExpedicion":
+                    case "LUGAREXPEDICION":
                         LugarExpedicion = at.Value;
                         break;
-                    case "NumCtaPago":
+                    case "NUMCTAPAGO":
                         NumCtaPago = at.Value;
                         break;
-                    case "FolioFiscalOrig":
+                    case "FOLIOFISCALORIG":
                         FolioFiscalOrig = at.Value;
                         break;
-                    case "SerieFolioFiscalOrig":
+                    case "SERIEFOLIOFISCALORIG":
                         SerieFolioFiscalOrig = at.Value;
                         break;
-                    case "FechaFolioFiscalOrig":
+                    case "FECHAFOLIOFISCALORIG":
                         FechaFolioFiscalOrig = at.Value;
                         break;
-                    case "MontoFolioFiscalOrig":
+                    case "MONTOFOLIOFISCALORIG":
                         MontoFolioFiscalOrig = at.Value;
                         break;
                 }
@@ -130,12 +135,10 @@ namespace LectorFacturasXML.Clases
                 if (n.Name.ToUpper().Contains("EMISOR"))
                 {
                     Emisor.Cargar(n.Attributes);
-                    Emisor.CargarNodos(n);
                 }
                 else if (n.Name.ToUpper().Contains("RECEPTOR"))
                 {
                     Receptor.Cargar(n.Attributes);
-                    Receptor.CargarNodos(n);
                 }
                 else if (n.Name.ToUpper().Contains("CONCEPTOS"))
                 {

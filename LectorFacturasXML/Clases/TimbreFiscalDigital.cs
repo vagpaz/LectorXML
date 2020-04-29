@@ -27,7 +27,7 @@ namespace LectorFacturasXML.Clases
             {
                 switch (at.Name)
                 {
-                    case "version":
+                    case "Version":
                         Version = at.Value;
                         break;
                     case "UUID":
@@ -36,13 +36,13 @@ namespace LectorFacturasXML.Clases
                     case "FechaTimbrado":
                         FechaTimbrado = Convert.ToDateTime(at.Value);
                         break;
-                    case "selloCFD":
+                    case "SelloCFD":
                         SelloCfd = at.Value;
                         break;
-                    case "noCertificadoSAT":
+                    case "NoCertificadoSAT":
                         NoCertificadoSat = at.Value;
                         break;
-                    case "selloSAT":
+                    case "SelloSAT":
                         SelloSat = at.Value;
                         break;
                     case "x":

@@ -7,11 +7,11 @@ namespace LectorFacturasXML.Clases
     /// </summary>
     public class Traslado
     {
-        public string impuesto { set; get; }
+        public string Impuesto { set; get; }
         // Atributo requerido para señalar el tipo de impuesto trasladado (IVA, IEPS)
-        public float tasa { set; get; }
+        public float Tasa { set; get; }
         //Atributo requerido para señalar la tasa del impuesto que se traslada por cada concepto amparado en el comprobante
-        public float importe { set; get; } //Atributo requerido para señalar el importe del impuesto trasladado
+        public float Importe { set; get; } //Atributo requerido para señalar el importe del impuesto trasladado
 
 
         public void Cargar(XmlAttributeCollection atributos)
@@ -21,13 +21,13 @@ namespace LectorFacturasXML.Clases
                 switch (at.Name)
                 {
                     case "importe":
-                        importe = float.Parse(at.Value);
+                        Importe = float.Parse(at.Value);
                         break;
                     case "impuesto":
-                        impuesto = at.Value;
+                        Impuesto = at.Value;
                         break;
                     case "tasa":
-                        tasa = float.Parse(at.Value);
+                        Tasa = float.Parse(at.Value);
                         break;
                 }
             }

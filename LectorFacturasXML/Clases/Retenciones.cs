@@ -5,11 +5,11 @@ namespace LectorFacturasXML.Clases
 {
     public class Retenciones
     {
-        private readonly List<Retencion> retenciones;
+        private readonly List<Impuesto> retenciones;
 
         public Retenciones()
         {
-            retenciones = new List<Retencion>();
+            retenciones = new List<Impuesto>();
         }
 
         public void Cargar(XmlAttributeCollection atributos)
@@ -34,9 +34,9 @@ namespace LectorFacturasXML.Clases
                 switch (n.Name)
                 {
                     case "cfdi:Retencion":
-                        var nuevoRetencion = new Retencion();
+                        var nuevoRetencion = new Impuesto();
                         nuevoRetencion.Cargar(n.Attributes);
-                        nuevoRetencion.CargarNodos(n); // ¿Quitar?
+                        //nuevoRetencion.CargarNodos(n); // ¿Quitar?
                         retenciones.Add(nuevoRetencion);
                         break;
                 }

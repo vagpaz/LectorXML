@@ -9,12 +9,12 @@ namespace LectorFacturasXML.Clases
     {
         public Impuestos()
         {
-            retenciones = new Retenciones();
-            traslados = new Traslados();
+            Retenciones = new Retenciones();
+            Traslados = new Traslados();
         }
 
-        public Retenciones retenciones { get; set; }
-        public Traslados traslados { get; set; }
+        public Retenciones Retenciones { get; set; }
+        public Traslados Traslados { get; set; }
         public float totalImpuestosRetenidos { set; get; }
         //Atributo opcional para expresar el total de los impuestos retenidos que se desprenden de los conceptos expresados en el comprobante fiscal digital a través de Internet.
         public float totalImpuestosTrasladados { set; get; }
@@ -26,10 +26,10 @@ namespace LectorFacturasXML.Clases
             {
                 switch (at.Name)
                 {
-                    case "totalImpuestosRetenidos":
+                    case "TotalImpuestosRetenidos":
                         totalImpuestosRetenidos = float.Parse(at.Value);
                         break;
-                    case "totalImpuestosTrasladados":
+                    case "TotalImpuestosTrasladados":
                         totalImpuestosTrasladados = float.Parse(at.Value);
                         break;
                     default:
@@ -44,13 +44,13 @@ namespace LectorFacturasXML.Clases
             {
                 if (n.Name.ToUpper().Contains("RETENCIONES"))
                 {
-                    retenciones.Cargar(n.Attributes); //¿Quitar?
-                    retenciones.CargarNodos(n);
+                    Retenciones.Cargar(n.Attributes); //¿Quitar?
+                    Retenciones.CargarNodos(n);
                 }
                 else if (n.Name.ToUpper().Contains("TRASLADO"))
                 {
-                    traslados.Cargar(n.Attributes); //¿Quitar?
-                    traslados.CargarNodos(n);
+                    Traslados.Cargar(n.Attributes); //¿Quitar?
+                    Traslados.CargarNodos(n);
                 }
             }
         }

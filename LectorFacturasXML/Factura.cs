@@ -25,7 +25,7 @@ namespace LectorFacturasXML
         }
 
 
-        private void button1_Click(object sender, EventArgs e)
+        private void Button1_Click(object sender, EventArgs e)
         {
             IEnumerable<string> archivos = ObtieneFiles(txtDirectory.Text);
             foreach (string s in archivos)
@@ -36,7 +36,7 @@ namespace LectorFacturasXML
                 xFactura.Load(s);
                 _strExcelFile = txtExcelFile.Text;
                 int position = s.LastIndexOf("\\", System.StringComparison.Ordinal);
-                string newName = cargar(xFactura);
+                string newName = Cargar(xFactura);
                 string complexName = s.Substring(0, position + 1) + newName;
                 int i = 0;
                 while (File.Exists(complexName + ".xml"))
@@ -49,7 +49,7 @@ namespace LectorFacturasXML
             MessageBox.Show("Proceso finalizado");
         }
 
-        private string cargar(XmlDocument xArchivo)
+        private string Cargar(XmlDocument xArchivo)
         {
             var fact = new Comprobante();
             foreach (var nodo in xArchivo.Cast<XmlNode>().Where(nodo => nodo.HasChildNodes && nodo.Name.ToUpper().Contains("COMPROBANTE")))
@@ -58,10 +58,11 @@ namespace LectorFacturasXML
                 fact.CargarNodos(nodo);
             }
             _xl.DataSource = _strExcelFile;
-            return _xl.GuardarEnExcel(fact);
+            string abc = _xl.InsertarDatos(fact);
+            return abc; //_xl.GuardarEnExcel(fact);
         }
 
-        private string seleccionaCarpeta()
+        private string SeleccionaCarpeta()
         {
             var x = new FolderBrowserDialog();
             return x.ShowDialog() == DialogResult.OK ? x.SelectedPath : "";
@@ -78,14 +79,14 @@ namespace LectorFacturasXML
             return x.ShowDialog() == DialogResult.OK ? x.FileName : "";
         }
 
-        private void button2_Click(object sender, EventArgs e)
+        private void Button2_Click(object sender, EventArgs e)
         {
             txtExcelFile.Text = SeleccionarArchivo();
         }
 
-        private void btnDirectory_Click(object sender, EventArgs e)
+        private void BtnDirectory_Click(object sender, EventArgs e)
         {
-            txtDirectory.Text = seleccionaCarpeta();
+            txtDirectory.Text = SeleccionaCarpeta();
         }
     }
 }

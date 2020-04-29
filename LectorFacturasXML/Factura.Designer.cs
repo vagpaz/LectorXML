@@ -43,7 +43,7 @@
             this.button1.TabIndex = 0;
             this.button1.Text = "Procesar";
             this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
+            this.button1.Click += new System.EventHandler(this.Button1_Click);
             // 
             // txtExcelFile
             // 
@@ -67,7 +67,7 @@
             this.btnExcelFile.TabIndex = 3;
             this.btnExcelFile.Text = "Seleccione Excel";
             this.btnExcelFile.UseVisualStyleBackColor = true;
-            this.btnExcelFile.Click += new System.EventHandler(this.button2_Click);
+            this.btnExcelFile.Click += new System.EventHandler(this.Button2_Click);
             // 
             // btnDirectory
             // 
@@ -77,7 +77,7 @@
             this.btnDirectory.TabIndex = 4;
             this.btnDirectory.Text = "Seleccione Carpeta";
             this.btnDirectory.UseVisualStyleBackColor = true;
-            this.btnDirectory.Click += new System.EventHandler(this.btnDirectory_Click);
+            this.btnDirectory.Click += new System.EventHandler(this.BtnDirectory_Click);
             // 
             // Factura
             // 

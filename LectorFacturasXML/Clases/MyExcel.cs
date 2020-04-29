@@ -12,7 +12,7 @@ namespace LectorFacturasXML.Clases
     {
         public string DataSource;
 
-        private bool guardarRegistro(string cmdText)
+        private bool GuardarRegistro(string cmdText)
         {
             var conStr = @"Provider=Microsoft.Jet.OLEDB.4.0;Data Source=" + DataSource + ";Extended Properties=Excel 8.0";
             var da = new OleDbDataAdapter
@@ -84,7 +84,7 @@ namespace LectorFacturasXML.Clases
             float miBase = iva16 / 0.16f;
             float miSubtotal = subtotal;
             float impteExto = 0.1 >= miSubtotal - miBase ? 0 : Math.Abs(miSubtotal - miBase);
-            impteBase = impteBase - impteExto;
+            impteBase -= impteExto;
             string fileName = miFecha.ToString("yyyy-MM-dd") + "-" + rfc + "-" + comprobante.Complemento.Timbre.Uuid;
 
             Excel.Application xlApp;
@@ -164,6 +164,77 @@ namespace LectorFacturasXML.Clases
             }
         }
 
+        public string InsertarDatos(Comprobante cmprbt) 
+        {
+            string NombreArchivo = "";
+            string Version = cmprbt.Version;
+            string Serie = cmprbt.Serie;
+            string Folio = cmprbt.Folio;
+            string Fecha = cmprbt.Fecha;
+            string Sello = ""; //cmprbt.Sello;
+            string FormaPago = cmprbt.FormaDePago;
+            string NoCertificado = cmprbt.NoCertificado;
+            string Certificado = ""; // cmprbt.Certificado;
+            string CondicionesDePago = cmprbt.CondicionesDePago;
+            string SubTotal = cmprbt.SubTotal;
+            string Descuento = cmprbt.Descuento;
+            string Moneda = cmprbt.Moneda;
+            string TipoCambio = cmprbt.TipoCambio;
+            string Total = cmprbt.Total;
+            string TipoDeComprobante = cmprbt.TipoDeComprobante;
+            string MetodoPago = cmprbt.MetodoDePago;
+            string LugarExpedicion = cmprbt.LugarExpedicion;
+            string Confirmacion = cmprbt.Confirmacion;
+            string Emisor_RFC = cmprbt.Emisor.RFC;
+            string Emisor_Nombre = cmprbt.Emisor.Nombre;
+            string Emisor_RegimenFiscal = cmprbt.Emisor.RegimenFiscal;
+            string Receptor_RFC = cmprbt.Receptor.RFC;
+            string Receptor_Nombre = cmprbt.Receptor.Nombre;
+            string Receptor_ResidenciaFiscal = cmprbt.Receptor.ResidenciaFiscal;
+            string Receptor_NumRegIdTrib = cmprbt.Receptor.NumRegIdTrib;
+            string Receptor_UsoCFDI = cmprbt.Receptor.UsoCFDI;
+            string TotalImpuestosRetenidos = cmprbt.Impuestos.totalImpuestosRetenidos.ToString();
+            string TotalImpuestosTrasladados = cmprbt.Impuestos.totalImpuestosTrasladados.ToString();
+            DateTime miFecha = Convert.ToDateTime(cmprbt.Fecha);
+            NombreArchivo = miFecha.ToString("yyyy-MM-dd") + "-" + Emisor_RFC + "-" + cmprbt.Complemento.Timbre.Uuid;
+            string mes = Convert.ToDateTime(miFecha.Year + "-" + miFecha.Month + "-" + 1).ToShortDateString();
+
+            string cmdText = "Insert into resumenFacturas values ('" +
+            NombreArchivo + "','" +
+            Version + "','" +
+            Serie + "','" +
+            Folio + "','" +
+            Fecha + "','" +
+            Sello + "','" +
+            FormaPago + "','" +
+            NoCertificado + "','" +
+            Certificado + "','" +
+            CondicionesDePago + "','" +
+            SubTotal + "','" +
+            Descuento + "','" +
+            Moneda + "','" +
+            TipoCambio + "','" +
+            Total + "','" +
+            TipoDeComprobante + "','" +
+            MetodoPago + "','" +
+            LugarExpedicion + "','" +
+            Confirmacion + "','" +
+            Emisor_RFC + "','" +
+            Emisor_Nombre + "','" +
+            Emisor_RegimenFiscal + "','" +
+            Receptor_RFC + "','" +
+            Receptor_Nombre + "','" +
+            Receptor_ResidenciaFiscal + "','" +
+            Receptor_NumRegIdTrib + "','" +
+            Receptor_UsoCFDI + "','" +
+            TotalImpuestosRetenidos + "','" +
+            TotalImpuestosTrasladados + "'" +
+            ")";
+            GuardarRegistro(cmdText);
+
+            return NombreArchivo;
+        }
+
         public string GuardarEnExcel(Comprobante comprobante)
         {
             ////Mes	Fecha	RFC	FOLIO	Tipo	Razon Social	Importe	Excento	Desc Imp	Desc Exto	Suma	IVA 16%	Total
@@ -183,12 +254,13 @@ namespace LectorFacturasXML.Clases
             string razonSocial = comprobante.Emisor.Nombre;
             float total = float.Parse(comprobante.Total);
             float subtotal = float.Parse(comprobante.SubTotal);
-            float iva16 = comprobante.Impuestos.totalImpuestosTrasladados;
+            float Traslados = comprobante.Impuestos.totalImpuestosTrasladados;
+            float Retenidos = comprobante.Impuestos.totalImpuestosRetenidos;
             float impteBase = (from concep in comprobante.Conceptos.conceptos select concep.Importe).Sum();
-            float miBase = iva16 / 0.16f;
+            float miBase = Traslados / 0.16f;
             float miSubtotal = subtotal;
             float impteExto = 0.1 >= miSubtotal - miBase ? 0 : Math.Abs(miSubtotal - miBase);
-            impteBase = impteBase - impteExto;
+            impteBase -= impteExto;
             string fileName = miFecha.ToString("yyyy-MM-dd") + "-" + rfc + "-" + comprobante.Complemento.Timbre.Uuid;
 
             string cmdText = "Insert into resumenFacturas values ('" +
@@ -204,9 +276,9 @@ namespace LectorFacturasXML.Clases
                              descuento + "," +
                              descExto + "," +
                              subtotal + "," +
-                             iva16 + "," +
+                             Traslados + "," +
                              total + ")";
-            guardarRegistro(cmdText);
+            GuardarRegistro(cmdText);
             return fileName;
         }
 
